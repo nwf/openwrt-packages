@@ -123,6 +123,9 @@ Package/transmission-daemon-mbedtls/conffiles = $(Package/transmission-daemon-op
 TARGET_CFLAGS += -ffunction-sections -fdata-sections -flto
 TARGET_LDFLAGS += -Wl,--gc-sections -Wl,--as-needed
 
+CONFIGURE_VARS += \
+	LIBEVENT_LIBS="$(STAGING_DIR)/usr/lib/libevent-2.1.so.5"
+
 CONFIGURE_ARGS += \
 	--enable-cli \
 	--enable-daemon \
