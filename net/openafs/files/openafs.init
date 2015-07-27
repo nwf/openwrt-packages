@@ -1,0 +1,14 @@
+#!/bin/sh /etc/rc.common
+
+START=45
+
+start() {
+	rmmod kafs || true
+	modprobe libafs || true
+	mkdir -p /afs /tmp/afscache
+	afsd -afsdb -dynroot -fakestat &
+}
+
+stop() {
+	afsd -shutdown
+}
