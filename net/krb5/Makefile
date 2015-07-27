@@ -41,6 +41,7 @@ define Package/krb5-libs
 	CATEGORY:=Network
 	TITLE:=Kerberos
 	DEPENDS:=+libncurses +libss +libcomerr
+	DEPENDS:=+libncurses +libss +libcomerr +libopenssl
 	TITLE:=Kerberos 5 Shared Libraries
 	URL:=http://web.mit.edu/kerberos/
 endef
