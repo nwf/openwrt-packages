@@ -19,7 +19,7 @@ PKG_HASH:=8f43c31767e88a25da72b52a40f3301fefc49a665b56dc10ee7cc9565cbe7481
 PKG_BUILD_PARALLEL:=1
 HOST_BUILD_PARALLEL:=1
 PKG_BUILD_DEPENDS:=gettext
-HOST_BUILD_DEPENDS:=gettext-full/host libiconv/host libffi/host
+HOST_BUILD_DEPENDS:=gettext-full/host libiconv/host libffi/host python3/host
 PKG_INSTALL:=1
 
 PKG_CPE_ID:=cpe:/a:gnome:glib
