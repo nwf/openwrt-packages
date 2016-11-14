@@ -80,6 +80,7 @@ define BuildComponent
   define Package/gnunet-$(1)
     $$(call Package/gnunet/Default)
     TITLE+= $(2)
+    #DEPENDS:=gnunet $(patsubst +%,+PACKAGE_$(PKG_NAME)-$(1):%,$(filter +%,$(DEPENDS_$(1)))) $(patsubst %,PACKAGE_$(PKG_NAME)-$(1):%,$(filter-out +%,$(DEPENDS_$(1))))
     DEPENDS:=gnunet $(DEPENDS_$(1))
     $(if $(3),DEFAULT:=y if PACKAGE_gnunet)
     $(if $(USERID_$(1)),USERID:=$(USERID_$(1)))
@@ -192,7 +193,7 @@ LIBEXEC_auction:=service-auction
 CONF_auction:=auction
 DEPENDS_auction:=+gnunet-reclaim +jansson
 
-DEPENDS_conversation:=+gnunet-gns +libgst1app +libgst1audio +libgstreamer1 +glib2 +pulseaudio-daemon +libopus +libogg
+DEPENDS_conversation:=+gnunet-gns +libgst1app +libgst1audio +libgstreamer1 +glib2 +pulseaudio-daemon +PACKAGE_gnunet-conversation:libopus +libogg
 BIN_conversation:=conversation conversation-test
 LIB_conversation:=conversation microphone speaker
 PLUGIN_conversation:=gnsrecord_conversation
