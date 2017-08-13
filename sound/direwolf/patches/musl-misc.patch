@@ -1,0 +1,46 @@
+--- a/digipeater.c.orig	2017-08-13 21:57:54.826374811 +0000
++++ b/digipeater.c	2017-08-13 21:58:18.506375298 +0000
+@@ -62,7 +62,7 @@
+ #include <stdio.h>
+ #include <ctype.h>	/* for isdigit, isupper */
+ #include "regex.h"
+-#include <sys/unistd.h>
++#include <unistd.h>
+ 
+ #include "ax25_pad.h"
+ #include "digipeater.h"
+--- a/cdigipeater.c.orig	2017-08-13 21:58:05.586375033 +0000
++++ b/cdigipeater.c	2017-08-13 21:58:25.638375444 +0000
+@@ -49,7 +49,7 @@
+ #include <stdio.h>
+ #include <ctype.h>	/* for isdigit, isupper */
+ #include "regex.h"
+-#include <sys/unistd.h>
++#include <unistd.h>
+ 
+ #include "ax25_pad.h"
+ #include "cdigipeater.h"
+--- a/multi_modem.c.orig	2017-08-13 21:57:59.938374916 +0000
++++ b/multi_modem.c	2017-08-13 21:58:22.450375378 +0000
+@@ -80,7 +80,7 @@
+ #include <string.h>
+ #include <assert.h>
+ #include <stdio.h>
+-#include <sys/unistd.h>
++#include <unistd.h>
+ 
+ #include "ax25_pad.h"
+ #include "textcolor.h"
+--- a/decode_aprs.c.orig	2017-08-13 22:03:04.142381167 +0000
++++ b/decode_aprs.c	2017-08-13 22:03:55.738382227 +0000
+@@ -55,6 +55,10 @@
+ #include "decode_aprs.h"
+ #include "telemetry.h"
+ 
++#ifndef __COMPAR_FN_T
++#define __COMPAR_FN_T
++typedef int (*__compar_fn_t)(const void *, const void *);
++#endif
+ 
+ #define TRUE 1
+ #define FALSE 0

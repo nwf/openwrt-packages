@@ -1,0 +1,55 @@
+--- a/direwolf.h	2017-04-27 00:03:55.000000000 +0000
++++ b/direwolf.h	2017-08-13 18:16:42.806102094 +0000
+@@ -226,39 +226,4 @@
+ char *strcasestr(const char *S, const char *FIND);
+ 
+ 
+-#if defined(__OpenBSD__) || defined(__FreeBSD__) || defined(__APPLE__)
+-
+-// strlcpy and strlcat should be in string.h and the C library.
+-
+-#else   // Use our own copy
+-
+-
+-// These prevent /usr/include/gps.h from providing its own definition.
+-#define HAVE_STRLCAT 1
+-#define HAVE_STRLCPY 1
+-
+-
+-#define DEBUG_STRL 1
+-
+-#if DEBUG_STRL
+-
+-#define strlcpy(dst,src,siz) strlcpy_debug(dst,src,siz,__FILE__,__func__,__LINE__)
+-#define strlcat(dst,src,siz) strlcat_debug(dst,src,siz,__FILE__,__func__,__LINE__)
+-
+-size_t strlcpy_debug(char *__restrict__ dst, const char *__restrict__ src, size_t siz, const char *file, const char *func, int line);
+-size_t strlcat_debug(char *__restrict__ dst, const char *__restrict__ src, size_t siz, const char *file, const char *func, int line);
+-
+-#else
+-
+-#define strlcpy(dst,src,siz) strlcpy_debug(dst,src,siz)
+-#define strlcat(dst,src,siz) strlcat_debug(dst,src,siz)
+-
+-size_t strlcpy_debug(char *__restrict__ dst, const char *__restrict__ src, size_t siz);
+-size_t strlcat_debug(char *__restrict__ dst, const char *__restrict__ src, size_t siz);
+-
+-#endif  /* DEBUG_STRL */
+-
+-#endif	/* BSD or Apple */
+-
+-
+ #endif   /* ifndef DIREWOLF_H */
+--- a/Makefile.linux.orig	2017-08-13 18:31:55.342120845 +0000
++++ b/Makefile.linux	2017-08-13 18:32:03.978121023 +0000
+@@ -297,7 +297,7 @@
+ 		ptt.o beacon.o encode_aprs.o latlong.o encode_aprs.o latlong.o textcolor.o \
+ 		dtmf.o aprs_tt.o tt_user.o tt_text.o igate.o waypoint.o serial_port.o log.o telemetry.o \
+ 		dwgps.o dwgpsnmea.o dwgpsd.o dtime_now.o mheard.o ax25_link.o \
+-		misc.a geotranz.a
++		geotranz.a
+ 	$(CC) -o $@ $^ $(LDFLAGS)
+ ifneq ($(enable_gpsd),)
+ 	@echo " "
+
+
