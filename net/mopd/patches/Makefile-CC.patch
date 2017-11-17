@@ -1,0 +1,71 @@
+--- a/common/Makefile.orig	2017-11-17 17:28:48.195592993 +0000
++++ a/common/Makefile	2017-11-17 17:28:53.695592358 +0000
+@@ -7,7 +7,7 @@
+ 	 ar -rs libcommon.a ${OBJS}
+ 
+ .c.o: .o
+-	cc -c $(CFLAGS) $<
++	$(CC) -c $(CFLAGS) $<
+ 	
+ clean: 
+ 	rm -f *.o *.a *~
+--- a/mopchk/Makefile.orig	2017-11-17 17:27:24.479602606 +0000
++++ a/mopchk/Makefile	2017-11-17 17:28:07.247597697 +0000
+@@ -5,10 +5,10 @@
+ all: mopchk
+ 
+ mopchk: ${OBJS} version.o $(LIBS)
+-	cc -o mopchk version.o ${OBJS} ${LIBS}
++	$(CC) -o mopchk version.o ${OBJS} ${LIBS}
+ 
+ .c.o: .c
+-	cc -c $(CFLAGS) ${INCL} $<
++	$(CC) -c $(CFLAGS) ${INCL} $<
+ 	
+ clean:
+ 	rm -f *.o *~ mopchk VERSION version.*
+--- a/mopd/Makefile.orig	2017-11-17 17:27:29.803601995 +0000
++++ a/mopd/Makefile	2017-11-17 17:28:32.055594846 +0000
+@@ -5,10 +5,10 @@
+ all: mopd
+ 
+ mopd: ${OBJS} version.o $(LIBS)
+-	cc -o mopd version.o ${OBJS} ${LIBS}
++	$(CC) -o mopd version.o ${OBJS} ${LIBS}
+ 
+ .c.o: .c
+-	cc -c $(CFLAGS) ${INCL} $<
++	$(CC) -c $(CFLAGS) ${INCL} $<
+ 	
+ clean:
+ 	rm -f *.o *~ mopd VERSION version.*
+--- a/moptrace/Makefile.orig	2017-11-17 17:27:37.979601056 +0000
++++ a/moptrace/Makefile	2017-11-17 17:28:15.695596725 +0000
+@@ -5,10 +5,10 @@
+ all: moptrace
+ 
+ moptrace: ${OBJS} version.o $(LIBS)
+-	cc -o moptrace version.o ${OBJS} ${LIBS}
++	$(CC) -o moptrace version.o ${OBJS} ${LIBS}
+ 
+ .c.o: .c
+-	cc -c $(CFLAGS) ${INCL} $<
++	$(CC) -c $(CFLAGS) ${INCL} $<
+ 	
+ clean:
+ 	rm -f *.o *~ moptrace VERSION version.*
+--- a/mopprobe/Makefile.orig	2017-11-17 17:27:33.611601555 +0000
++++ a/mopprobe/Makefile	2017-11-17 17:28:29.175595179 +0000
+@@ -5,10 +5,10 @@
+ all: mopprobe
+ 
+ mopprobe: ${OBJS} version.o $(LIBS)
+-	cc -o mopprobe version.o ${OBJS} ${LIBS}
++	$(CC) -o mopprobe version.o ${OBJS} ${LIBS}
+ 
+ .c.o: .c
+-	cc -c $(CFLAGS) ${INCL} $<
++	$(CC) -c $(CFLAGS) ${INCL} $<
+ 	
+ clean:
+ 	rm -f *.o *~ mopprobe VERSION version.*

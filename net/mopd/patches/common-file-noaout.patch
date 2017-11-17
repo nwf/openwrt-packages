@@ -1,0 +1,10 @@
+--- a/common/file.c.orig	2017-11-17 17:59:10.113798758 +0000
++++ a/common/file.c	2017-11-17 17:59:33.553796068 +0000
+@@ -54,7 +54,6 @@
+ #endif
+ #if defined(__linux__)
+ #define NOAOUT
+-#include <a.out.h>
+ #define MID_I386 100
+ #define MID_SPARC 3
+ #endif
