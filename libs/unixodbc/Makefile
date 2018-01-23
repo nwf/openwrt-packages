@@ -105,7 +105,6 @@ define Build/InstallDev
 	$(INSTALL_DIR) $(1)/usr/lib
 	$(CP) $(PKG_INSTALL_DIR)/usr/lib/* $(1)/usr/lib/
 	$(INSTALL_DIR) $(1)/etc
-	$(CP) $(PKG_INSTALL_DIR)/etc/odbc* $(1)/etc/
 	$(INSTALL_DIR) $(1)/etc/ODBCDataSources
 	$(TARGET_CC) $(TARGET_CFLAGS) -E ./files/unixodbc_conf.h | tr '@' '\#' >$(1)/usr/include/unixodbc_conf.h
 endef
