@@ -21,6 +21,7 @@ PKG_CPE_ID:=cpe:/a:libseccomp_project:libseccomp
 PKG_BUILD_PARALLEL:=1
 PKG_INSTALL:=1
 PKG_LIBTOOL_PATHS:=. lib
+PKG_FIXUP:=autoreconf
 
 PKG_CONFIG_DEPENDS:= \
 	CONFIG_KERNEL_SECCOMP
