@@ -78,6 +78,11 @@ define Package/rsync/description
  between two sets of files across the network link.
 endef
 
+define Build/Compile
+	$(call Build/Compile/Default,reconfigure)
+	$(call Build/Compile/Default)
+endef
+
 define Package/rsync/install
 	$(INSTALL_DIR) $(1)/usr/bin
 	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/bin/$(PKG_NAME) $(1)/usr/bin/
