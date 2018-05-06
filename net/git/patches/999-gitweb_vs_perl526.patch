@@ -1,0 +1,11 @@
+--- git-2.16.3/gitweb/Makefile.orig	2018-05-06 10:36:24.860057243 +0000
++++ git-2.16.3/gitweb/Makefile	2018-05-06 10:36:35.440063856 +0000
+@@ -18,7 +18,7 @@
+ INSTALL ?= install
+ 
+ # default configuration for gitweb
+-GITWEB_CONFIG = gitweb_config.perl
++GITWEB_CONFIG = ./gitweb_config.perl
+ GITWEB_CONFIG_SYSTEM = /etc/gitweb.conf
+ GITWEB_CONFIG_COMMON = /etc/gitweb-common.conf
+ GITWEB_HOME_LINK_STR = projects
