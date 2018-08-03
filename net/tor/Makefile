@@ -20,6 +20,7 @@ PKG_MAINTAINER:=Hauke Mehrtens <hauke@hauke-m.de> \
 PKG_LICENSE_FILES:=LICENSE
 PKG_CPE_ID:=cpe:/a:torproject:tor
 
+PKG_FIXUP:=autoreconf
 PKG_INSTALL:=1
 PKG_FIXUP:=autoreconf
 PKG_BUILD_PARALLEL:=1
