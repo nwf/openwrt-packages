@@ -42,6 +42,10 @@ PKG_CONFIG_DEPENDS:= \
 
 include $(INCLUDE_DIR)/package.mk
 
+define Build/Prepare
+	$(call Build/Prepare/Default)
+	echo > $(PKG_BUILD_DIR)/gtk-doc.make
+endef
 
 define Package/gnutls/Default
   SUBMENU:=SSL
