@@ -15,7 +15,7 @@ PKG_USE_MIPS16:=0
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.xz
 PKG_SOURCE_URL:=https://www.gnupg.org/ftp/gcrypt/gnutls/v3.6
 PKG_HASH:=5630751adec7025b8ef955af4d141d00d252a985769f51b4059e5affa3d39d63
-#PKG_FIXUP:=autoreconf gettext-version
+PKG_FIXUP:=autoreconf gettext-version
 PKG_MAINTAINER:=Nikos Mavrogiannopoulos <nmav@gnutls.org>
 PKG_LICENSE:=LGPL-2.1-or-later
 PKG_CPE_ID:=cpe:/a:gnu:gnutls
@@ -40,6 +40,10 @@ PKG_CONFIG_DEPENDS:= \
 
 include $(INCLUDE_DIR)/package.mk
 
+define Build/Prepare
+        $(call Build/Prepare/Default)
+	echo > $(PKG_BUILD_DIR)/gtk-doc.make
+endef
 
 define Package/gnutls/Default
   SUBMENU:=SSL
