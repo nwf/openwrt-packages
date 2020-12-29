@@ -25,6 +25,8 @@ PKG_BUILD_PARALLEL:=1
 PKG_INSTALL:=1
 PKG_BUILD_FLAGS:=no-mips16
 
+PKG_BUILD_DEPENDS:=e2fsprogs/host
+
 include $(INCLUDE_DIR)/package.mk
 
 MAKE_PATH:=src
@@ -86,6 +88,8 @@ CONFIGURE_ARGS += \
 	--with-system-ss \
 	--with-system-et \
 	--without-system-verto \
+	--with-system-ss \
+	--with-system-et \
 	--without-tcl \
 	--without-tls-impl \
 	--without-libedit \
@@ -94,6 +98,8 @@ CONFIGURE_ARGS += \
 	--disable-pkinit \
 	--with-size-optimizations \
 	--with-crypto-impl=builtin
+
+MAKE_VARS += MAKE_COMMANDS="$(STAGING_DIR_HOST)/bin/mk_cmds"
 
 define Build/InstallDev
 	$(INSTALL_DIR) $(1)/usr/include
