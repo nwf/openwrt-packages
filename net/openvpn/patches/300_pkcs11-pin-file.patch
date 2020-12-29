@@ -1,0 +1,101 @@
+--- openvpn-2.4_rc2/src/openvpn/options.h.orig	2016-12-24 04:37:57.646553680 +0000
++++ openvpn-2.4_rc2/src/openvpn/options.h	2016-12-24 04:45:42.858666843 +0000
+@@ -529,6 +529,7 @@
+     int pkcs11_pin_cache_period;
+     const char *pkcs11_id;
+     bool pkcs11_id_management;
++    const char *pkcs11_pinfile;
+ #endif
+ 
+ #ifdef ENABLE_CRYPTOAPI
+--- openvpn-2.4_rc2/src/openvpn/pkcs11.c.orig	2016-12-24 04:37:57.654553682 +0000
++++ openvpn-2.4_rc2/src/openvpn/pkcs11.c	2016-12-24 04:45:02.338656987 +0000
+@@ -234,7 +234,6 @@
+     char prompt[1024];
+ 
+     (void)global_data;
+-    (void)user_data;
+     (void)retry;
+ 
+     ASSERT(token!=NULL);
+@@ -247,7 +246,7 @@
+     if (
+         !get_user_pass(
+             &token_pass,
+-            NULL,
++            user_data, /* pinfile as user_data pointer */
+             prompt,
+             GET_USER_PASS_MANAGEMENT|GET_USER_PASS_PASSWORD_ONLY|GET_USER_PASS_NOFATAL
+             )
+@@ -652,7 +651,8 @@
+ tls_ctx_use_pkcs11(
+     struct tls_root_ctx *const ssl_ctx,
+     bool pkcs11_id_management,
+-    const char *const pkcs11_id
++    const char *const pkcs11_id,
++    const char *const pkcs11_pinfile
+     )
+ {
+     pkcs11h_certificate_id_t certificate_id = NULL;
+@@ -725,7 +725,7 @@
+     if (
+         (rv = pkcs11h_certificate_create(
+              certificate_id,
+-             NULL,
++             pkcs11_pinfile, /* pinfile as user_data pointer */
+              PKCS11H_PROMPT_MASK_ALLOW_ALL,
+              PKCS11H_PIN_CACHE_INFINITE,
+              &certificate
+--- openvpn-2.4_rc2/src/openvpn/ssl.c.orig	2016-12-24 04:37:57.662553684 +0000
++++ openvpn-2.4_rc2/src/openvpn/ssl.c	2016-12-24 04:41:33.694606234 +0000
+@@ -618,7 +618,7 @@
+ #ifdef ENABLE_PKCS11
+     else if (options->pkcs11_providers[0])
+     {
+-        if (!tls_ctx_use_pkcs11(new_ctx, options->pkcs11_id_management, options->pkcs11_id))
++        if (!tls_ctx_use_pkcs11(new_ctx, options->pkcs11_id_management, options->pkcs11_id, options->pkcs11_pinfile))
+         {
+             msg(M_WARN, "Cannot load certificate \"%s\" using PKCS#11 interface",
+                 options->pkcs11_id);
+--- openvpn-2.4_rc2/src/openvpn/options.c.orig	2016-12-24 04:37:57.598553669 +0000
++++ openvpn-2.4_rc2/src/openvpn/options.c	2016-12-24 04:48:23.802705993 +0000
+@@ -670,6 +670,7 @@
+     "                                  cache until token is removed.\n"
+     "--pkcs11-id-management          : Acquire identity from management interface.\n"
+     "--pkcs11-id serialized-id 'id'  : Identity to use, get using standalone --show-pkcs11-ids\n"
++    "--pkcs11-pinfile 'file'         : Read PKCS11 pin from file\n"
+ #endif                  /* ENABLE_PKCS11 */
+     "\n"
+     "SSL Library information:\n"
+@@ -1808,6 +1809,7 @@
+     SHOW_INT(pkcs11_pin_cache_period);
+     SHOW_STR(pkcs11_id);
+     SHOW_BOOL(pkcs11_id_management);
++    SHOW_STR (pkcs11_pinfile);
+ #endif                  /* ENABLE_PKCS11 */
+ 
+ #if P2MP
+@@ -8137,6 +8144,11 @@
+         VERIFY_PERMISSION(OPT_P_GENERAL);
+         options->pkcs11_id_management = true;
+     }
++    else if (streq (p[0], "pkcs11-pinfile") && p[1] && !p[2])
++    {
++      VERIFY_PERMISSION (OPT_P_GENERAL);
++      options->pkcs11_pinfile = p[1];
++    }
+ #endif /* ifdef ENABLE_PKCS11 */
+     else if (streq(p[0], "rmtun") && !p[1])
+     {
+--- openvpn-2.4_rc2/src/openvpn/pkcs11.h.orig	2016-12-24 04:37:57.654553682 +0000
++++ openvpn-2.4_rc2/src/openvpn/pkcs11.h	2016-12-24 04:42:46.470623937 +0000
+@@ -63,7 +63,8 @@
+ tls_ctx_use_pkcs11(
+     struct tls_root_ctx *const ssl_ctx,
+     bool pkcs11_id_management,
+-    const char *const pkcs11_id
++    const char *const pkcs11_id,
++    const char *const pkcs11_pinfile
+     );
+ 
+ void
