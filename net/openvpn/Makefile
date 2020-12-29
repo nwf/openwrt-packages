@@ -37,7 +37,7 @@ define Package/openvpn/Default
   SUBMENU:=VPN
   MENU:=1
   DEPENDS:=+kmod-tun +libcap-ng +OPENVPN_$(1)_ENABLE_LZO:liblzo +OPENVPN_$(1)_ENABLE_LZ4:liblz4 +OPENVPN_$(1)_ENABLE_IPROUTE2:ip \
-	+OPENVPN_$(1)_ENABLE_DCO:libnl-genl +OPENVPN_$(1)_ENABLE_DCO:kmod-ovpn-dco-v2 $(3)
+	+OPENVPN_$(1)_ENABLE_DCO:libnl-genl +OPENVPN_$(1)_ENABLE_DCO:kmod-ovpn-dco-v2 +OPENVPN_$(1)_ENABLE_PKCS11:opensc-pkcs11-helper $(3)
   VARIANT:=$(1)
   PROVIDES:=openvpn openvpn-crypto
 endef
@@ -75,7 +75,8 @@ define Build/Configure
 		--disable-systemd \
 		--disable-plugins \
 		--disable-debug \
-		--disable-pkcs11 \
+		--enable-password-save \
+		$(if $(CONFIG_OPENVPN_$(BUILD_VARIANT)_ENABLE_PKCS11),--enable,--disable)-pkcs11 \
 		$(if $(CONFIG_OPENVPN_$(BUILD_VARIANT)_ENABLE_LZO),--enable,--disable)-lzo \
 		$(if $(CONFIG_OPENVPN_$(BUILD_VARIANT)_ENABLE_LZ4),--enable,--disable)-lz4 \
 		$(if $(CONFIG_OPENVPN_$(BUILD_VARIANT)_ENABLE_X509_ALT_USERNAME),--enable,--disable)-x509-alt-username \

@@ -20,9 +20,9 @@ config OPENVPN_openssl_ENABLE_MANAGEMENT
 	bool "Enable management server support"
 	default n
 
-#config OPENVPN_openssl_ENABLE_PKCS11
-#	bool "Enable pkcs11 support"
-#	default n
+config OPENVPN_openssl_ENABLE_PKCS11
+	bool "Enable pkcs11 support"
+	default n
 
 config OPENVPN_openssl_ENABLE_FRAGMENT
 	bool "Enable internal fragmentation support (--fragment)"
