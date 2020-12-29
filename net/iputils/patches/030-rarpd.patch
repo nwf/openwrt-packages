@@ -1,0 +1,11 @@
+--- a/rarpd.c	2018-01-24 06:24:18.239894280 +0000
++++ b/rarpd.c	2018-01-24 06:25:59.256063653 +0000
+@@ -99,7 +99,7 @@
+ 	}
+ 
+ 	ifc.ifc_len = sizeof ibuf;
+-	ifc.ifc_buf = (caddr_t)ibuf;
++	ifc.ifc_req = ibuf;
+ 	if (ioctl(fd, SIOCGIFCONF, (char *)&ifc) < 0 ||
+ 	    ifc.ifc_len < (int)sizeof(struct ifreq)) {
+ 		syslog(LOG_ERR, "SIOCGIFCONF: %m");
